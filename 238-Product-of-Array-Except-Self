@@ -1,0 +1,36 @@
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+## Solution-1
+        # total_product = 1
+        # zero_count = nums.count(0)  # Count the number of zeros
+        # if zero_count > 1:
+        #     return [0] * len(nums)  # If more than one zero, all results are zero
+        # for x in nums:
+        #     if x != 0:
+        #         total_product *= x  # Compute the product of non-zero elements
+        # result = []
+        # for x in nums:
+        #     if zero_count == 1:
+        #         if x == 0:
+        #             result.append(total_product)  # Only one zero, replace it with the total product
+        #         else:
+        #             result.append(0)  # Other elements become zero
+        #     else:
+        #         result.append(total_product // x)  # No zeros, divide by each element
+        # return result
+
+## solution - 2 This this solution we use concept of prefix and sufix sum
+
+        n = len(nums)
+        prefix = [1] * n
+        suffix = [1] * n
+        ## computing prifix array
+        for i in range(1, n):
+            prefix[i] = prefix[i-1] * nums[i-1]
+        ## computing suffix array
+        for i in range(n-2, -1, -1):
+            suffix[i] = suffix[i+1] * nums[i+1]
+        ## computing result 
+        result =  [prefix[i] * suffix[i] for i in range(n)]
+        return result
+
