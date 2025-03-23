@@ -1,0 +1,42 @@
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        ## solution - 1
+        n = len(height)
+        def getLeftArray(height, n):
+            leftMax = [0] * n
+            leftMax[0] = height[0]
+            for i in range(n):
+                leftMax[i] = max(leftMax[i-1],height[i])
+            return leftMax
+        def getRightArray(height, n):
+            rightMax = [0] * n
+            rightMax[n-1] = height[n-1]
+            for i in range(n-2, -1, -1):
+                rightMax[i] = max(rightMax[i+1], height[i])
+            return rightMax
+        leftMax = getLeftArray(height, n)
+        rightMax = getRightArray(height, n)
+        sum = 0
+        for i in range(n):
+            h = min(leftMax[i], rightMax[i])-height[i]
+            sum += h
+        return sum
+
+        ## Solution - 2
+
+        n = len(height)
+        water = 0
+        left, right = 0, n-1
+        leftMax, rightMax = 0, 0
+        while left < right:
+            if height[left] < height[right]:
+                leftMax = max(leftMax, height[left])
+                water += leftMax - height[left]
+                left += 1
+            else:
+                rightMax = max(rightMax, height[right])
+                water += rightMax - height[right]
+                right -= 1
+        return water
+
+        
