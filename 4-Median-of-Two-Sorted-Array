@@ -1,0 +1,19 @@
+class Solution:
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+        # Step 1: Find the union of the two arrays
+        union_result = nums1 + nums2
+        # union_array = list(union_result)
+        # Step 2: Sort the union array
+        union_result.sort()
+        # Step 3: Find the median
+        n = len(union_result)
+        if n % 2 == 1:
+            # If the number of elements is odd, return the middle element
+            median = union_result[n// 2]
+        else:
+            # If the number of elements is even, return the average of the two middle elements
+            mid1 = union_result[n // 2 - 1]
+            mid2 = union_result[n // 2]
+            median = (mid1 + mid2) / 2
+        
+        return median
